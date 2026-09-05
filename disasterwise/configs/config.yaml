@@ -1,0 +1,61 @@
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  splits_dir: data/splits
+  xview_dir: data/raw/xview
+  tabular_dir: data/raw/tabular # Example for tabular data
+
+preprocessing:
+  image_size: [1024, 1024]
+  normalization: 'standard' # or 'min-max'
+  test_size: 0.2
+  val_size: 0.1
+  tile_size: 512
+  overlap: 50
+
+model:
+  name: 'rtdetr' # or 'unet', 'resnet', 'vgg'
+  parameters:
+    learning_rate: 0.001
+    epochs: 50
+    batch_size: 8
+    imgsz: 1024
+    conf_threshold: 0.25
+    rtdetr_variant: 'rtdetr-l.pt' # available: rtdetr-l.pt, rtdetr-x.pt
+  prediction:
+    name: 'transformer'
+    input_dim: 20
+    d_model: 64
+    nhead: 4
+    num_layers: 3
+    seq_len: 10
+    dropout: 0.1
+    learning_rate: 0.001
+    epochs: 50
+    batch_size: 16
+  xai:
+    method: 'shap'
+    num_background_samples: 50
+    num_test_samples: 10
+    output_dir: 'experiments/xai_reports'
+    feature_names: [
+      'temp', 'humidity', 'wind_speed', 'rainfall',
+      'building_count', 'damage_severity', 'flood_ratio', 'debris_density',
+      'infra_integrity', 'vegetation_index', 'soil_moisture', 'elevation',
+      'pop_density', 'dist_to_coast', 'historical_risk', 'slope',
+      'land_cover', 'pressure', 'cloud_cover', 'visibility'
+    ]
+  experiment_tracking:
+    base_dir: 'experiments/runs'
+    metrics_to_track: ['accuracy', 'precision', 'recall', 'f1_score', 'detection_mAP']
+    save_format: ['json', 'csv']
+    comparison_report_path: 'experiments/comparison_report.csv'
+  feature_extraction:
+    tile_size: 512
+    overlap: 0.1
+    input_dim: 20
+    output_dir: 'data/features'
+
+logging:
+  log_file: 'experiments/disasterwise.log'
+  level: 'INFO'

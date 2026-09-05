@@ -1,0 +1,47 @@
+# Python environments and generated files
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+
+# Generated experiment output and local databases
+*.db
+*.sqlite
+*.sqlite3
+experiments/runs/
+experiments/xai_reports/
+experiments/*.log
+backend/uploads/
+
+# Datasets, generated features, and model weights
+data/raw/
+data/processed/
+data/splits/
+data/features/
+saved_models/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Frontend dependencies and build/cache output
+frontend/node_modules/
+frontend/.cache/
+frontend/build/
+
+# Archives and editor/system files
+*.zip
+.DS_Store
+Thumbs.db
+.vscode/

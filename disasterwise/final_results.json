@@ -1,0 +1,76 @@
+{
+  "evaluation_failure": true,
+  "reason": "Multiple required components missing to execute evaluation pipeline",
+  "missing_items": [
+    {
+      "component": "Trained RT-DETR model weights",
+      "file_pattern": "*.pt",
+      "required_for": "Object detection evaluation",
+      "location": "Expected in saved_models/ directory or specified via --model argument"
+    },
+    {
+      "component": "Trained Transformer model weights",
+      "file_pattern": "*.pt",
+      "required_for": "Risk prediction evaluation",
+      "location": "Expected in saved_models/ directory or specified via --model argument"
+    },
+    {
+      "component": "rtdetr_data.yaml data configuration",
+      "file_name": "rtdetr_data.yaml",
+      "required_for": "Object detection evaluation",
+      "location": "Expected in configs/ directory, generated during training"
+    },
+    {
+      "component": "Processed test data features",
+      "file_pattern": "*.npy",
+      "required_for": "Risk prediction evaluation",
+      "location": "Expected in data/features/ directory, generated during preprocessing/training"
+    },
+    {
+      "component": "Model definitions directory",
+      "directory_name": "models/",
+      "required_for": "Prediction model import",
+      "location": "Expected at disasterwise/models/, containing prediction/transformer_model.py"
+    }
+  ],
+  "dependencies": {
+    "installed": [
+      "fastapi",
+      "uvicorn",
+      "python-multipart",
+      "pydantic",
+      "sqlite3",
+      "numpy",
+      "torch",
+      "pyyaml",
+      "ultralytics"
+    ],
+    "missing_python_modules": [
+      "cv2 (opencv-python)",
+      "seaborn",
+      "matplotlib",
+      "scikit-learn"
+    ],
+    "note": "cv2, seaborn, matplotlib, and scikit-learn are listed in code imports but not in requirements.txt"
+  },
+  "evaluation_scripts": [
+    {
+      "name": "evaluate_detection.py",
+      "location": "src/evaluation/evaluate_detection.py",
+      "usage": "python main.py evaluate-detection --model <path_to_rtdetr.pt> --data_split test"
+    },
+    {
+      "name": "evaluate_prediction.py",
+      "location": "src/evaluation/evaluate_prediction.py",
+      "usage": "python main.py evaluate-prediction --model <path_to_transformer.pt> --data <path_to_test_features.npy>"
+    }
+  ],
+  "pipeline_steps_required": [
+    "1. Preprocess dataset: python main.py preprocess",
+    "2. Tile images: python main.py tile --tile_size 512 --overlap 50",
+    "3. Train detection model: python main.py train-detection",
+    "4. Train prediction model: python main.py train-prediction",
+    "5. Run evaluations using main.py evaluate-detection and evaluate-prediction commands"
+  ],
+  "timestamp": "2026-06-15T00:00:00Z"
+}

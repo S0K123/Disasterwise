@@ -1,0 +1,18 @@
+{
+  "object_detection": {
+    "mAP": "NOT_AVAILABLE - Requires trained model weights",
+    "IoU": "NOT_AVAILABLE - Requires trained model weights",
+    "Precision": "NOT_AVAILABLE - Requires trained model weights",
+    "Recall": "NOT_AVAILABLE - Requires trained model weights",
+    "F1-score": "NOT_AVAILABLE - Requires trained model weights"
+  },
+  "risk_prediction": {
+    "Accuracy": "NOT_AVAILABLE - Requires trained model weights and test data",
+    "Precision": "NOT_AVAILABLE - Requires trained model weights and test data",
+    "Recall": "NOT_AVAILABLE - Requires trained model weights and test data",
+    "F1-score": "NOT_AVAILABLE - Requires trained model weights and test data",
+    "ROC-AUC": "NOT_AVAILABLE - Requires trained model weights and test data"
+  },
+  "status": "Evaluation pipeline not executed due to missing dependencies",
+  "timestamp": "2026-06-15T00:00:00Z"
+}
